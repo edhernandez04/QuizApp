@@ -12,7 +12,7 @@ const MainStack = () => (
   <NavigationContainer>
   <Stack.Navigator>
     <Stack.Screen name="Quizzes" component={QuizIndex} />
-    <Stack.Screen name="Quiz" component={Quiz} />
+    <Stack.Screen name={'Quiz'} component={Quiz} options={({ route }) => ({ title: route.params.title, headerStyle: {backgroundColor: route.params.color}, headerTintColor: '#fff' })}/>
   </Stack.Navigator>
 </NavigationContainer>
 )

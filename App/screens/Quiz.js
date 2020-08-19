@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, StyleSheet, StatusBar, Text, SafeAreaView  } from 'react-native'
-import TEMP_QUESTIONS from '../data/computers'
 import { Button, ButtonContainer } from '../components/Button'
 import { Alert } from '../components/Alert'
 
@@ -8,7 +7,7 @@ class Quiz extends React.Component {
 
     state = {
         correctCount: 0,
-        totalCount: TEMP_QUESTIONS.length,
+        totalCount: this.props.route.params.questions.length,
         activeQuestionIndex: 0,
         answered: false,
         answerCorrect: false
@@ -43,9 +42,10 @@ class Quiz extends React.Component {
     }
 
     render(){
-        const question = TEMP_QUESTIONS[this.state.activeQuestionIndex]
+        const questions = this.props.route.params.questions
+        const question = questions[this.state.activeQuestionIndex]
         return(
-            <View style={styles.container}>
+            <View style={[styles.container, {backgroundColor: this.props.route.params.color}]}>
                 <StatusBar barStyle='light-content'/>
                 <SafeAreaView style={styles.safearea}>
                     <View>
