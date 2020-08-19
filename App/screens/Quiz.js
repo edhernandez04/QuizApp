@@ -1,6 +1,7 @@
 import React from 'react'
-import { View, StyleSheet, StatusBar, Text  } from 'react-native'
+import { View, StyleSheet, StatusBar, Text, SafeAreaView  } from 'react-native'
 import TEMP_QUESTIONS from '../data/computers'
+import { Button, ButtonContainer } from '../components/Button'
 
 class Quiz extends React.Component {
     render(){
@@ -8,7 +9,17 @@ class Quiz extends React.Component {
         return(
             <View style={styles.container}>
                 <StatusBar barStyle='light-content'/>
-                <Text style={styles.text}>{question.question}</Text>
+                <SafeAreaView style={styles.safearea}>
+                    <View>
+                        <Text style={styles.text}>{question.question}</Text>
+                        <ButtonContainer>
+                            {question.answers.map(answer => (
+                                <Button key={answer.id} text={answer.text} onPress={() => alert('todo')}/>
+                            ))}
+                        </ButtonContainer>
+                    </View>
+                    <Text style={styles.text}>0/3</Text>
+                </SafeAreaView>
             </View>
         )
     }
@@ -17,10 +28,20 @@ class Quiz extends React.Component {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#36B1F0',
-        flex: 1
+        flex: 1,
+        paddingHorizontal: 20
     },
     text: {
-
+        color: 'white',
+        fontSize: 25,
+        textAlign: 'center',
+        letterSpacing: -0.02,
+        fontWeight: '600'
+    },
+    safearea: {
+        flex: 1,
+        marginTop: 100,
+        justifyContent: 'space-between'
     }
 })
 
