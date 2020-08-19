@@ -2,24 +2,30 @@ import React from 'react'
 import { View, StyleSheet, StatusBar, Text, SafeAreaView  } from 'react-native'
 import TEMP_QUESTIONS from '../data/computers'
 import { Button, ButtonContainer } from '../components/Button'
+import { Alert } from '../components/Alert'
 
 class Quiz extends React.Component {
 
     state = {
         correctCount: 0,
         totalCount: TEMP_QUESTIONS.length,
-        activeQuestionIndex: 0
+        activeQuestionIndex: 0,
+        answered: false,
+        answerCorrect: false
     }
 
     answer = correct => {
         this.setState( state => {
-            const nextState = {}
+            const nextState = { answered: true }
             if (correct) {
                 nextState.correctCount = state.correctCount + 1
+                nextState.answerCorrect = true
+            } else {
+                nextState.answerCorrect = false
             }
             return nextState
         }, () => {
-            this.nextQuestion()
+            setTimeout(() => this.nextQuestion(), 750)
         })
     }
 
@@ -30,7 +36,8 @@ class Quiz extends React.Component {
                 nextIndex = 0
             }
             return {
-                activeQuestionIndex: nextIndex
+                activeQuestionIndex: nextIndex,
+                answered: false
             }
         })
     }
@@ -51,6 +58,7 @@ class Quiz extends React.Component {
                     </View>
                     <Text style={styles.text}>{`${this.state.correctCount}/${this.state.totalCount}`}</Text>
                 </SafeAreaView>
+                <Alert correct={this.state.answerCorrect} visible={this.state.answered}/>
             </View>
         )
     }
