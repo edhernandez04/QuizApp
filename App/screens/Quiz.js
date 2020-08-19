@@ -4,8 +4,39 @@ import TEMP_QUESTIONS from '../data/computers'
 import { Button, ButtonContainer } from '../components/Button'
 
 class Quiz extends React.Component {
+
+    state = {
+        correctCount: 0,
+        totalCount: TEMP_QUESTIONS.length,
+        activeQuestionIndex: 0
+    }
+
+    answer = correct => {
+        this.setState( state => {
+            const nextState = {}
+            if (correct) {
+                nextState.correctCount = state.correctCount + 1
+            }
+            return nextState
+        }, () => {
+            this.nextQuestion()
+        })
+    }
+
+    nextQuestion = () => {
+        this.setState( state => {
+            let nextIndex = state.activeQuestionIndex + 1
+            if (nextIndex >= state.totalCount){
+                nextIndex = 0
+            }
+            return {
+                activeQuestionIndex: nextIndex
+            }
+        })
+    }
+
     render(){
-        const question = TEMP_QUESTIONS[0]
+        const question = TEMP_QUESTIONS[this.state.activeQuestionIndex]
         return(
             <View style={styles.container}>
                 <StatusBar barStyle='light-content'/>
@@ -14,11 +45,11 @@ class Quiz extends React.Component {
                         <Text style={styles.text}>{question.question}</Text>
                         <ButtonContainer>
                             {question.answers.map(answer => (
-                                <Button key={answer.id} text={answer.text} onPress={() => alert('todo')}/>
+                                <Button key={answer.id} text={answer.text} onPress={() => this.answer(answer.correct)}/>
                             ))}
                         </ButtonContainer>
                     </View>
-                    <Text style={styles.text}>0/3</Text>
+                    <Text style={styles.text}>{`${this.state.correctCount}/${this.state.totalCount}`}</Text>
                 </SafeAreaView>
             </View>
         )
