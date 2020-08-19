@@ -1,12 +1,17 @@
 import React from 'react'
-import { View, Button, StatusBar } from 'react-native'
+import { View, Button, StatusBar, ScrollView } from 'react-native'
+
+import spaceQuestions from '../data/space'
+import westernsQuestions from '../data/westerns'
+import computerQuestions from '../data/computers'
+
+import { RowItem } from '../components/RowItem'
 
 export default ({ navigation }) => (
-  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <StatusBar barStyle="dark-content" />
-    <Button
-      title="Go to next screen"
-      onPress={() => navigation.navigate('Quiz')}
-    />
-  </View>
+    <ScrollView>
+        <StatusBar barStyle="dark-content" />
+        <RowItem name="Space" color="#36b1f0" onPress={() => navigation.navigate('Quiz')}/>
+        <RowItem name="Westerns" color="#799496" onPress={() => navigation.navigate('Quiz')}/>
+        <RowItem name="Computers" color="#49475B" onPress={() => navigation.navigate('Quiz')}/>
+    </ScrollView>
 )
